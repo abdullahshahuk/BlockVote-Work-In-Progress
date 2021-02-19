@@ -4,7 +4,7 @@ TCP_IP = '92.19.5.65'
 TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
-while True:
+def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((TCP_IP, TCP_PORT))
     with open('received_file', 'wb') as f:
@@ -19,7 +19,10 @@ while True:
                 break
             # write data to a file
             f.write(data)
-    
+
     print('Successfully get the file')
     s.close()
     print('connection closed')
+    
+while True:
+    main()

@@ -1,4 +1,5 @@
 import socket
+import datetime
 from threading import Thread
 from socketserver import ThreadingMixIn
 
@@ -17,6 +18,7 @@ class ClientThread(Thread):
         self.port = port
         self.sock = sock
         print (" New thread started for "+ip+":"+str(port))
+        print (datetime.datetime.now())
 
     def run(self):
         filename='mytext.txt'
@@ -37,14 +39,18 @@ tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 tcpsock.bind((TCP_IP, TCP_PORT))
 threads = []
 
+index = 0
+
 while True:
     tcpsock.listen(5)
     print ("Waiting for incoming connections...")
     (conn, (ip,port)) = tcpsock.accept()
     print ('Got connection from ', (ip,port))
     newthread = ClientThread(ip,port,conn)
+    print (index)
     newthread.start()
     threads.append(newthread)
+    index = index + 1
 
 for t in threads:
     t.join()
