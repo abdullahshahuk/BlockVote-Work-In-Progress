@@ -18,6 +18,23 @@ class ClientThread(Thread):
         print (datetime.datetime.now())
 
     def run(self):
+        with open('received_file', 'wb') as f:
+            print ('file opened')
+            while True:
+                #print('receiving data...')
+                data = self.sock.recv(BUFFER_SIZE)
+                print('data=%s', (data))
+                if not data:
+                    f.close()
+                    print ('file close()')
+                    break
+                # write data to a file
+                f.write(data)
+        
+        self.sock.close()
+        print('connection closed')
+        
+        '''
         filename='mytext.txt'
         f = open(filename,'rb')
         while True:
@@ -30,6 +47,7 @@ class ClientThread(Thread):
                 f.close()
                 self.sock.close()
                 break
+        '''
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
