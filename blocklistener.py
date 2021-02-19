@@ -1,7 +1,7 @@
 import socket
 
-TCP_IP = 'localhost'
-TCP_PORT = 9001
+TCP_IP = '92.19.5.65'
+TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
