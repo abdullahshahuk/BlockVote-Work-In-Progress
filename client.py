@@ -2,8 +2,11 @@ import socket
 from threading import Thread
 from socketserver import ThreadingMixIn
 
-TCP_IP = 'localhost'
-TCP_PORT = 9001
+#TCP_IP = 'localhost'
+#TCP_IP = '92.19.5.65'
+#TCP_IP = '192.168.1.8'
+TCP_IP = '0.0.0.0'
+TCP_PORT = 5001
 BUFFER_SIZE = 1024
 
 class ClientThread(Thread):
