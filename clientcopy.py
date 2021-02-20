@@ -1,24 +1,76 @@
+import wmi
+import csv
 import socket
+import hashlib
+import re, uuid
 
-TCP_IP = '92.19.5.65'
+c = wmi.WMI()
+
+TCP_IP = 'blockvote.ddns.net'
 TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
-def main():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((TCP_IP, TCP_PORT))
+# Encodes a string with SHA256 Encoding
+def SHA256ENC(string):
+    hash_func = hashlib.sha256()
+    encoded_string=string.encode()
+    hash_func.update(encoded_string)
+    message = hash_func.hexdigest()
+    return message
+
+# Generates NodeID from the Hash of the MAC Address + the Hard Drive serial number.
+def createNodeID():
+    MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
+    NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
+    return NodeID
+
+
+# Takes the .csv named knownNodes.csv and turns it into an array
+def createNodeIDList():
+    nodeListFilename = 'knownNodes.csv'
+        
+    Nodes = []
+        
+    with open(nodeListFilename, 'r') as fd:
+        reader = csv.reader(fd)
+        for row in reader:
+            Nodes.append(row)
+            print(row)
+            
+    return Nodes
     
-    filename='mytext.txt'
-    f = open(filename,'rb')
+    
+# Searches through the array of nodes and checks if your NodeID is in that List
+def searchNodeIDList(NodeID, NodeIDList):
+    if NodeID in NodeIDList:
+        return True
+    else:
+        return False
+    
+
+def updateNodeIDList(Nodes):
+    nodeListFilename = 'knownNodes.csv'
+        
+    with open(nodeListFilename, 'w') as fd:
+        writer = csv.writer(fd)
+        for node in Nodes:
+            writer.writerow([node])
+    
+def main():
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientSocket.connect((TCP_IP, TCP_PORT))
+    
+    pendingTransmissionFile = 'pendingTransmission.txt'
+    pendingTransmission = open(pendingTransmissionFile,'rb')
     while True:
-        l = f.read(BUFFER_SIZE)
+        l = pendingTransmission.read(BUFFER_SIZE)
         while (l):
-            s.send(l)
-            #print('Sent ',repr(l))
-            l = f.read(BUFFER_SIZE)
+            clientSocket.send(l)
+            l = pendingTransmission.read(BUFFER_SIZE)
         if not l:
-            f.close()
-            s.close()
+            pendingTransmission.close()
+            clientSocket.close()
             break
             
     '''
@@ -38,8 +90,20 @@ def main():
     print('Successfully get the file')
     '''
     
-    s.close()
+    clientSocket.close()
     print('connection closed')
+
+if __name__ == "__main__":
+    #NodeID = createNodeID()
+    #NodeList = createNodeIDList()
+    #nodeIDinList = searchNodeIDList(NodeID, NodeList)
+    #print(nodeIDinList)
     
-while True:
-    main()
+    # If the ID isn't in the list append the ID to the list
+    #if nodeIDinList == False:
+    #    NodeList.append(NodeID)
+        
+    # Overwrite contents of .csv file with updated data
+    #updateNodeIDList(NodeList)
+    while True:
+        main()
