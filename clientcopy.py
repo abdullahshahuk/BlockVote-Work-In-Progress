@@ -1,10 +1,10 @@
-import wmi
+#import wmi
 import csv
 import socket
 import hashlib
 import re, uuid
 
-c = wmi.WMI()
+#c = wmi.WMI()
 
 TCP_IP = 'blockvote.ddns.net'
 TCP_PORT = 5006
@@ -19,11 +19,11 @@ def SHA256ENC(string):
     return message
 
 # Generates NodeID from the Hash of the MAC Address + the Hard Drive serial number.
-def createNodeID():
-    MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
-    HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
-    NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
-    return NodeID
+#def createNodeID():
+    #MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    #HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
+    #NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
+    #return NodeID
 
 
 # Takes the .csv named knownNodes.csv and turns it into an array
