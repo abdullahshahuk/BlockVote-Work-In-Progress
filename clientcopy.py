@@ -1,10 +1,10 @@
-#import wmi
+import wmi
 import csv
 import socket
 import hashlib
 import re, uuid
 
-#c = wmi.WMI()
+c = wmi.WMI()
 
 TCP_IP = 'blockvote.ddns.net'
 TCP_PORT = 5006
@@ -19,11 +19,11 @@ def SHA256ENC(string):
     return message
 
 # Generates NodeID from the Hash of the MAC Address + the Hard Drive serial number.
-#def createNodeID():
-    #MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
-    #HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
-    #NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
-    #return NodeID
+def createNodeID():
+    MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
+    NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
+    return NodeID
 
 
 # Takes the .csv named knownNodes.csv and turns it into an array
@@ -94,16 +94,16 @@ def main():
     print('connection closed')
 
 if __name__ == "__main__":
-    #NodeID = createNodeID()
-    #NodeList = createNodeIDList()
-    #nodeIDinList = searchNodeIDList(NodeID, NodeList)
-    #print(nodeIDinList)
+    NodeID = createNodeID()
+    NodeList = createNodeIDList()
+    nodeIDinList = searchNodeIDList(NodeID, NodeList)
+    print(nodeIDinList)
     
     # If the ID isn't in the list append the ID to the list
-    #if nodeIDinList == False:
-    #    NodeList.append(NodeID)
+    if nodeIDinList == False:
+        NodeList.append(NodeID)
         
     # Overwrite contents of .csv file with updated data
-    #updateNodeIDList(NodeList)
+    updateNodeIDList(NodeList)
     while True:
         main()
