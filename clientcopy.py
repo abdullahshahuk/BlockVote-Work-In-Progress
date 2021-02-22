@@ -1,10 +1,21 @@
-import wmi
 import csv
 import socket
 import hashlib
+import platform
 import re, uuid
 
-c = wmi.WMI()
+if platform == "linux" or platform == "linux2":
+    # linux
+    print()
+    
+elif platform == "darwin":
+    # MAC OS X
+    print()
+    
+elif platform == "win64" or platform == "win32":
+    # Windows 64-bit and 32-bit
+    import wmi
+    c = wmi.WMI()
 
 TCP_IP = 'blockvote.ddns.net'
 TCP_PORT = 5006
