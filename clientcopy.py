@@ -17,7 +17,7 @@ elif platform == "win64" or platform == "win32":
     import wmi
     c = wmi.WMI()
 
-TCP_IP = 'blockvote.ddns.net'
+TCP_IP = 'blockvote2.ddns.net'
 TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
@@ -31,7 +31,11 @@ def SHA256ENC(string):
 
 # Generates NodeID from the Hash of the MAC Address + the Hard Drive serial number.
 def createNodeID():
-    MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    if platform == "win64" or platform == "win32":
+        MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    else:
+        MACAddress = ':Null'
+        
     HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
     NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
     return NodeID
