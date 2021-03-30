@@ -83,23 +83,6 @@ def main():
             pendingTransmission.close()
             clientSocket.close()
             break
-            
-    '''
-    with open('received_file', 'wb') as f:
-        print ('file opened')
-        while True:
-            #print('receiving data...')
-            data = s.recv(BUFFER_SIZE)
-            print('data=%s', (data))
-            if not data:
-                f.close()
-                print ('file close()')
-                break
-            # write data to a file
-            f.write(data)
-
-    print('Successfully get the file')
-    '''
     
     clientSocket.close()
     print('connection closed')

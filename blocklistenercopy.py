@@ -7,6 +7,8 @@ TCP_IP = '0.0.0.0'
 TCP_PORT = 5001
 BUFFER_SIZE = 1024
 
+# A blockchain node of sorts
+
 class ClientThread(Thread):
 
     def __init__(self,ip,port,sock):
@@ -33,21 +35,6 @@ class ClientThread(Thread):
         
         self.sock.close()
         print('connection closed')
-        
-        '''
-        filename='mytext.txt'
-        f = open(filename,'rb')
-        while True:
-            l = f.read(BUFFER_SIZE)
-            while (l):
-                self.sock.send(l)
-                #print('Sent ',repr(l))
-                l = f.read(BUFFER_SIZE)
-            if not l:
-                f.close()
-                self.sock.close()
-                break
-        '''
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -67,6 +54,7 @@ while True:
     threads.append(newthread)
     index = index + 1
 
+# Currently redundant code, may be used for multithreading at a later date
 for t in threads:
     t.join()
     
