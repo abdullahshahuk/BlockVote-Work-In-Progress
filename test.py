@@ -33,8 +33,6 @@ print('Node ID: ' + NodeID + '\n')
 import csv
 import numpy
 
-#### WORK IN PROGRESS BELOW ####
-
 def createNodeID():
     MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
     HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()

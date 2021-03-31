@@ -47,22 +47,26 @@ def createNodeIDList():
         
     Nodes = []
         
-    with open(nodeListFilename, 'r') as fd:
+    with open(nodeListFilename, 'r', newline='') as fd:
         reader = csv.reader(fd)
         for row in reader:
             Nodes.append(row)
-            print(row)
+            #print(row)
+            #print(Nodes)
             
     return Nodes
     
     
 # Searches through the array of nodes and checks if your NodeID is in that List
 def searchNodeIDList(NodeID, NodeIDList):
+    print(NodeIDList)
+    NodeID = NodeID.split(",")
+    print(NodeID)
     if NodeID in NodeIDList:
         return True
     else:
         return False
-    
+        
 
 def updateNodeIDList(Nodes):
     nodeListFilename = 'knownNodes.csv'
