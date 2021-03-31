@@ -133,7 +133,7 @@ def addNBlocks(n):
             record = [sender, receiver, memo, amount]
         )
         
-blockchainz.difficultyLevel = 5
+blockchainz.difficultyLevel = 6
 
 currentBlock = 0
 

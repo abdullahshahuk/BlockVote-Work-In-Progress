@@ -58,7 +58,7 @@ class Block:
         message = str(self.timestamp) + str(self.record) + str(self.previousHash)
         
         if difficultyLevel:
-            leadingZeros = "3"*difficultyLevel
+            leadingZeros = "0"*difficultyLevel
             nonce = 0
             
             while True:
