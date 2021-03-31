@@ -25,7 +25,7 @@ class ClientThread(Thread):
             while True:
                 #print('receiving data...')
                 data = self.sock.recv(BUFFER_SIZE)
-                #print('data=%s', (data))
+                print('data=%s', (data))
                 if not data:
                     f.close()
                     print ('file close()')
