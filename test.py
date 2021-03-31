@@ -59,7 +59,7 @@ def createNodeIDList():
 # Searches through the array of nodes and checks if your NodeID is in that List
 def searchNodeIDList(NodeID, NodeIDList):
     print(NodeIDList)
-    #NodeID = "['" + NodeID + "']"
+    NodeID = NodeID.split(",")
     print(NodeID)
     if NodeID in NodeIDList:
         return True
