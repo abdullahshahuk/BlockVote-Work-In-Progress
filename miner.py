@@ -95,6 +95,8 @@ def main():
 blockchainz = lib.Blockchain()
 
 # Vars
+
+# Currently data is randomly generated
 userList = ["Alice", "Bob", "Anon", "David", "Anon", "Franklin", "Anon", "Harry", "Iris", 
                 "Anon", "Kate", "Leo", "Monica", "Anon", "Oscar", "Phoebe", "Quinn", "Anon", 
                 "Sofia", "Anon", "Umar", "Victor", "Anon", "Xena", "Anon", "Zara"]
