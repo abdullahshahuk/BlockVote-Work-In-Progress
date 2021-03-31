@@ -1,6 +1,0 @@
-Index: 1
-Timestamp: 2021-02-18 02:41:16.181123
-Record: [('Anon',), ('Policy 01',), ('Y',), 1]
-Previous Hash : 0009b0b6cfae2db6e21cb773961410d2ec3a3f9edd3b6fd8ef91d58355f6ef89
-Hash : 0f8927f4468b03e9de79284da98898f6b54bfdd4794b7b07ec426efe957b9a85
-Nonce : 14

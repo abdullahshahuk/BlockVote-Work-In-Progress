@@ -14,7 +14,7 @@ memoList = ["Y", "N", "I"]
 receiverList = ["Policy 01", "Policy 02", "Policy 03"]
 
 # Blockchain file handler
-filename = 'blockchain.txt'
+filename = 'pendingTransmission.txt'
 
 if os.path.exists(filename):
     append_write = 'a' # append if already exists
@@ -32,7 +32,7 @@ def addNBlocks(n):
             record = [sender, receiver, memo, amount]
         )
         
-blockchainz.difficultyLevel = 1
+blockchainz.difficultyLevel = 6
 
 currentBlock = 0
 
