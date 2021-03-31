@@ -83,17 +83,27 @@ def main():
     clientSocket.close()
     print('connection closed')
 
+    #Clears pending transmission after file has been sent.
+    open(pendingTransmissionFile, 'w').close()
+
 if __name__ == "__main__":
+
+    # Determine NodeID
     NodeID = createNodeID()
+
+    # Reads knownNodes.csv and converts it into a variable
     NodeList = createNodeIDList()
+
+    # Searches Nodes to see if NodeID is found
     nodeIDinList = searchNodeIDList(NodeID, NodeList)
-    print(nodeIDinList)
-    
+
     # If the ID isn't in the list append the ID to the list
     if nodeIDinList == False:
         NodeList.append(NodeID)
         
-    # Overwrite contents of .csv file with updated data
+    # Overwrite contents of knownNodes.csv file with updated data
     updateNodeIDList(NodeList)
+
+    # Currently an endless loop
     while True:
         main()
