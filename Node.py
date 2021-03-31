@@ -1,6 +1,7 @@
 '''
 
 Currently this script receives mined blocks and adds them to a copy of the blockchain.
+A full node verifies the chain instead of just copying it.
 
 '''
 
