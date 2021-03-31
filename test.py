@@ -31,6 +31,7 @@ print('Node ID: ' + NodeID + '\n')
 # Handling the data storage (Storing the Node ID's and associating them with the IP addresses of each device) 
 
 import csv
+import numpy
 
 #### WORK IN PROGRESS BELOW ####
 
@@ -46,31 +47,36 @@ def createNodeIDList():
         
     Nodes = []
         
-    with open(nodeListFilename, 'r') as fd:
+    with open(nodeListFilename, 'r', newline='') as fd:
         reader = csv.reader(fd)
         for row in reader:
             Nodes.append(row)
-            print(row)
+            #print(row)
+            #print(Nodes)
             
     return Nodes
 
 # Searches through the array of nodes and checks if your NodeID is in that List
 def searchNodeIDList(NodeID, NodeIDList):
+    print(NodeIDList)
+    #NodeID = "['" + NodeID + "']"
+    print(NodeID)
     if NodeID in NodeIDList:
         return True
     else:
-        #print(NodeID)
-        print(NodeIDList)
         return False
     
 
 def updateNodeIDList(Nodes):
     nodeListFilename = 'knownNodes.csv'
+
+    #print(Nodes)
         
-    with open(nodeListFilename, 'w') as fd:
+    with open(nodeListFilename, 'w', newline='') as fd:
         writer = csv.writer(fd)
         for node in Nodes:
-            writer.writerow([node])
+            writer.writerow([str(node).translate({ord('['): '', ord(']'): '', ord('\''): ''})])
+            #print(node)
 
 
 NodeID = createNodeID()
