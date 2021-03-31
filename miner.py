@@ -1,3 +1,12 @@
+'''
+
+Currently this script generates dummy blocks and calulates the POW before sending them to a node.
+
+When finished this script will send requests to validators for unmined transactions and adds them to thier blocks.
+After this it then calculates the POW.
+
+'''
+
 import os
 import random
 import lib

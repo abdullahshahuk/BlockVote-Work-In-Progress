@@ -1,3 +1,9 @@
+'''
+
+Currently this script receives mined blocks and adds them to a copy of the blockchain.
+
+'''
+
 import socket
 import datetime
 from threading import Thread
