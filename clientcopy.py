@@ -3,19 +3,7 @@ import socket
 import hashlib
 import platform
 import re, uuid
-
-if platform == "linux" or platform == "linux2":
-    # linux
-    print()
-    
-elif platform == "darwin":
-    # MAC OS X
-    print()
-    
-elif platform == "win64" or platform == "win32":
-    # Windows 64-bit and 32-bit
-    import wmi
-    c = wmi.WMI()
+import wmi
 
 TCP_IP = 'blockvote2.ddns.net'
 TCP_PORT = 5006
@@ -31,12 +19,10 @@ def SHA256ENC(string):
 
 # Generates NodeID from the Hash of the MAC Address + the Hard Drive serial number.
 def createNodeID():
-    if platform == "win64" or platform == "win32":
-        MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
-    else:
-        MACAddress = ':Null'
-        
+    c = wmi.WMI()
+    MACAddress = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
     HardDriveSerialNumber = c.Win32_PhysicalMedia()[0].wmi_property('SerialNumber').value.strip()
+        
     NodeID = SHA256ENC(MACAddress + HardDriveSerialNumber)
     return NodeID
 
@@ -51,9 +37,7 @@ def createNodeIDList():
         reader = csv.reader(fd)
         for row in reader:
             Nodes.append(row)
-            #print(row)
-            #print(Nodes)
-            
+
     return Nodes
     
     
@@ -66,16 +50,20 @@ def searchNodeIDList(NodeID, NodeIDList):
         return True
     else:
         return False
-        
+
 
 def updateNodeIDList(Nodes):
     nodeListFilename = 'knownNodes.csv'
+
+    #print(Nodes)
         
-    with open(nodeListFilename, 'w') as fd:
+    with open(nodeListFilename, 'w', newline='') as fd:
         writer = csv.writer(fd)
         for node in Nodes:
-            writer.writerow([node])
-    
+            writer.writerow([str(node).translate({ord('['): '', ord(']'): '', ord('\''): ''})])
+            #print(node)
+
+
 def main():
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((TCP_IP, TCP_PORT))
