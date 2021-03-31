@@ -20,7 +20,7 @@ class ClientThread(Thread):
         print (datetime.datetime.now())
 
     def run(self):
-        with open('received_file', 'ab') as f:
+        with open('blockchain.txt', 'ab') as f:
             print ('file opened')
             while True:
                 #print('receiving data...')
